@@ -36,15 +36,23 @@ def start():
     username = profile['name']
     print('Hello ' + username + ' How can I help you?')
     if profile['inputType'] == 'typing':
+        print("""
+        Command templates:
+        Notify: n time message
+        """)
         print('(n)otify, (q)uit')
         command = input()
         if command == 'q':
             clear()
             sys.exit()
-        if command == 'n':
-            notification.message = "Test"
+        if command[0] == 'n':
+            commandArgs = list(map(str,command.split(' ')))
+            print(commandArgs)
+            notification.message = commandArgs[2]
             notification.send()
-
+        else:
+            clear()
+            sys.exit()
 
 # Check if first run
 if os.path.exists('profile.json'):
