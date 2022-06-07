@@ -1,8 +1,11 @@
-import os
-import json
+import os, sys, json
+from notifypy import Notify
 
 clear = lambda: os.system('cls' if os.name=='nt' else 'clear')
-
+notification = Notify(
+  default_notification_title="Virtual Assistant",
+  default_notification_icon="./assets/icon.png",
+)
 
 def firstStart():
     clear()
@@ -33,7 +36,15 @@ def start():
     username = profile['name']
     print('Hello ' + username + ' How can I help you?')
     if profile['inputType'] == 'typing':
-        print('(n)otify, ')
+        print('(n)otify, (q)uit')
+        command = input()
+        if command == 'q':
+            clear()
+            sys.exit()
+        if command == 'n':
+            notification.message = "Test"
+            notification.send()
+
 
 # Check if first run
 if os.path.exists('profile.json'):
